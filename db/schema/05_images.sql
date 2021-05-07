@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS images CASCADE;
+CREATE TABLE images (
+  id SERIAL PRIMARY KEY NOT NULL,
+  image BYTEA,
+  project_id INTEGER REFERENCES projects(id) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP,
+  deleted_at TIMESTAMP
+);
