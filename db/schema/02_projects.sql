@@ -6,6 +6,7 @@ CREATE TABLE projects (
   target_amount NUMERIC NOT NULL,
   target_date DATE NOT NULL,
   min_amount NUMERIC NOT NULL,
+  link VARCHAR(255),
   round VARCHAR(50),
   contract TEXT,
   user_id INTEGER REFERENCES users(id) NOT NULL,
