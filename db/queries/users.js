@@ -12,6 +12,12 @@ const getUserByAuthId = (authId) => {
         .select('*');
 }
 
+const addUsers = (user) => {
+  console.log(user)
+  return knex('users')
+      .insert(user);
+}
+
 module.exports = {
-  getUserById, getUserByAuthId
+  getUserById, getUserByAuthId, addUsers
 }
