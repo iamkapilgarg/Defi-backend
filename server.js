@@ -1,7 +1,7 @@
 const Express = require('express');
 const App = Express();
 const BodyParser = require('body-parser');
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const userRoutes = require('./routes/users');
 const projectRoutes = require('./routes/projects');
 const imageRoutes = require('./routes/images');
