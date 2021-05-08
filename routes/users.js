@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
     auth_id
   };
   addUsers(user).then((data) => {
-    res.status(201);
+    res.status(201).send({message: "user save successfully"})
   })
 })
 
