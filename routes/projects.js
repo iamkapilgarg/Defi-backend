@@ -66,8 +66,8 @@ router.post('/', upload.array('image',1), (req, res, next) => {
     user_id: body.user_id,
     link: body.link
   }
-  saveProject(project).then(() => {
-    res.status(201).send("Uploaded!");
+  saveProject(project).then((data) => {
+    res.status(201).json({"message": "project saved successfully", id: data[0]});
   })
 });
 
