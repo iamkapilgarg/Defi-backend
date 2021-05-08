@@ -7,4 +7,8 @@
 <tr><td>Get projects By user id</td><td>/projects/users/:userId</td></tr>
 <tr><td>Get invested projects By user id</td><td>/projects/users/fundings/:userId</td></tr>
 <tr><td>Get images By project id</td><td>/images/projects/:projectId</td></tr>
+<tr><td>Post user</td><td>{
+    "name": "<name>",
+    "authId": "<authid>"
+}</td></tr>
 </table>
