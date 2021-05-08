@@ -37,8 +37,8 @@ axios(config)
   console.log(error);
 });
 ```
-<br>
 #### POST project body
+
 ```js
 var axios = require('axios');
 var FormData = require('form-data');
