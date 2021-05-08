@@ -21,6 +21,7 @@ App.use("/projects", projectRoutes);
 App.use("/images", imageRoutes);
 App.use("/fundings", fundingRoutes);
 App.use("/comments", commentRoutes);
+App.set("view engine", "ejs");
 
 // Sample GET route
 App.get('/', (req, res) => res.json({

@@ -5,7 +5,20 @@ const getProjectsByInvestorId = (id) => {
   .join('projects', 'fundings.project_id', 'projects.id')
   .join('users', 'fundings.user_id', 'users.id')
   .where('users.id', id)
-  .select('*');
+  .select('projects.id as id',
+    'projects.name',
+    'projects.description',
+    'projects.target_amount',
+    'projects.target_date',
+    'projects.min_amount',
+    'projects.link',
+    'projects.round',
+    'projects.contract',
+    'projects.user_id',
+    'projects.created_at',
+    'projects.updated_at',
+    'projects.deleted_at',
+  );
 };
 
 const saveFunding = (funding) => {

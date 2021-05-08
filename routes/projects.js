@@ -9,30 +9,80 @@ const multer = require('multer')
 const multerS3 = require('multer-s3')
 
 router.get("/", (req, res) => {
-  listProjects().then((data) => {
-    res.json(data)
+  listProjects().then((projects) => {
+    const promises = [];
+    for(let project of projects) {
+      promises.push(getImagesByProjectsId(project.id));
+    }
+    Promise.all(promises).then((images) => {
+      const projectsArray = [];
+      for(let image of images) {
+        for(let project of projects) {
+          if(image[0].project_id === project.id) {
+            console.log('inside a')
+            projectsArray.push({... project, "images": image})
+          }
+        }
+      }
+      res.status(200).json(projectsArray);
+    });
   });
 });
 
 router.get("/:id", (req, res) => {
   const projectId = req.params.id;
   getProjectById(projectId).then((data) => {
-    res.json(data);
+    let project = {};
+    getImagesByProjectsId(data[0].id).then((images) => {
+      project = {...data[0], images}
+      res.status(200).json(project);
+    });
   });
 });
 
 router.get("/users/:id", (req, res) => {
   const userId = req.params.id;
-  getProjectsByUserId(userId).then((data) => {
-    res.json(data);
+  getProjectsByUserId(userId).then((projects) => {
+    const promises = [];
+    for(let project of projects) {
+      promises.push(getImagesByProjectsId(project.id));
+    }
+    Promise.all(promises).then((images) => {
+      const projectsArray = [];
+      for(let image of images) {
+        for(let project of projects) {
+          if(image[0].project_id === project.id) {
+            console.log('inside a')
+            projectsArray.push({... project, "images": image})
+          }
+        }
+      }
+      res.status(200).json(projectsArray);
+    });
   });
 });
 
 router.get("/users/fundings/:id", (req, res) => {
   const userId = req.params.id;
-  getProjectsByInvestorId(userId).then((data) => {
-    res.json(data);
-  })
+  getProjectsByInvestorId(userId).then((projects) => {
+    console.log(projects)
+    const promises = [];
+    for(let project of projects) {
+      promises.push(getImagesByProjectsId(project.id));
+    }
+    Promise.all(promises).then((images) => {
+      const projectsArray = [];
+      for(let image of images) {
+        for(let project of projects) {
+          if(image[0].project_id === project.id) {
+            console.log('inside a')
+            projectsArray.push({... project, "images": image})
+          }
+        }
+      }
+      res.status(200).json(projectsArray);
+    });
+  });
 });
 
 aws.config.update({
