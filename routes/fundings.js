@@ -1,12 +1,23 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const {getFundingsByProjectID, saveFunding} = require('../db/queries/fundings');
+const {getFundingsByProjectID, saveFunding, getFundingsByUserID} = require('../db/queries/fundings');
 
 router.get("/projects/:id", (req, res) => {
   const projectId = req.params.id;
   getFundingsByProjectID(projectId).then((data) => {
     return res.status(200).send(data)
+  }).catch((err) => {
+    return res.status(500).send(err)
+  });
+});
+
+router.get("/users/:id", (req, res) => {
+  const userId = req.params.id;
+  getFundingsByUserID(userId).then((data) => {
+    return res.status(200).send(data)
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 
@@ -31,6 +42,8 @@ router.post("/", (req,res) => {
   }
   saveFunding(funding).then((data)=>{
     return res.status(201).json({"message": "transaction saved successfully", "id":data[0]})
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 

@@ -19,13 +19,16 @@ router.get("/", (req, res) => {
       for (let image of images) {
         for (let project of projects) {
           if (image[0].project_id === project.id) {
-            console.log('inside a')
             projectsArray.push({ ...project, "images": image })
           }
         }
       }
       return res.status(200).json(projectsArray);
+    }).catch((err) => {
+      return res.status(500).send(err)
     });
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 
@@ -36,7 +39,11 @@ router.get("/:id", (req, res) => {
     getImagesByProjectsId(data[0].id).then((images) => {
       project = { ...data[0], images }
       return res.status(200).json(project);
+    }).catch((err) => {
+      return res.status(500).send(err)
     });
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 
@@ -52,13 +59,16 @@ router.get("/users/:id", (req, res) => {
       for (let image of images) {
         for (let project of projects) {
           if (image[0].project_id === project.id) {
-            console.log('inside a')
             projectsArray.push({ ...project, "images": image })
           }
         }
       }
       return res.status(200).json(projectsArray);
+    }).catch((err) => {
+      return res.status(500).send(err)
     });
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 
@@ -80,7 +90,11 @@ router.get("/users/fundings/:id", (req, res) => {
         }
       }
       return res.status(200).json(projectsArray);
+    }).catch((err) => {
+      return res.status(500).send(err)
     });
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 
@@ -141,10 +155,14 @@ router.post('/', upload.array('image', 1), (req, res, next) => {
       }
       saveImage(image).then((data) => {
         console.log("image saved successfully")
+      }).catch((err) => {
+        return res.status(500).send(err)
       });
     }
     return res.status(201).json({ "message": "project saved successfully", id: data[0] });
-  })
+  }).catch((err) => {
+    return res.status(500).send(err)
+  });
 });
 
 module.exports = router;

@@ -7,6 +7,8 @@ router.get("/projects/:id", (req, res) => {
   const projectId = req.params.id;
   getCommentsByProjectId(projectId).then((data) => {
     return res.status(200).json(data)
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 
@@ -27,6 +29,8 @@ router.post("/", (req,res) => {
   }
   saveComments(comment).then((data)=>{
     return res.status(201).json({"message": "comments saved successfully", "id": data[0]})
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 

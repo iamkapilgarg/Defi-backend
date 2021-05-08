@@ -27,6 +27,12 @@ const getFundingsByProjectID = (id) => {
   .select('*')
 }
 
+const getFundingsByUserID = (id) => {
+  return knex('fundings')
+  .where('user_id', id)
+  .select('*')
+}
+
 const saveFunding = (funding) => {
   return knex('fundings')
       .insert(funding)
@@ -34,5 +40,5 @@ const saveFunding = (funding) => {
 }
 
 module.exports = {
-  getProjectsByInvestorId, saveFunding,getFundingsByProjectID
+  getProjectsByInvestorId, saveFunding,getFundingsByProjectID, getFundingsByUserID
 }

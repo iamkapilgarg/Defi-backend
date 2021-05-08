@@ -7,6 +7,8 @@ router.get("/:id", (req, res) => {
   const userId = req.params.id;
   getUserById(userId).then((data) => {
     return res.json(data);
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 
@@ -14,6 +16,8 @@ router.get("/auth/:id", (req, res) => {
   const authId = req.params.id;
   getUserByAuthId(authId).then((data) => {
     return res.json(data);
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 
@@ -28,10 +32,14 @@ router.post("/", (req, res) => {
       };
       addUsers(user).then((data) => {
         return res.status(201).json({message: "user saved successfully", id: data[0]})
+      }).catch((err) => {
+        return res.status(500).send(err)
       });
       return;
     }
     return res.status(400).json({message: "user already exists"})
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 

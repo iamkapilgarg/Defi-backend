@@ -6,7 +6,9 @@ const {getImagesByProjectsId} = require('../db/queries/images');
 router.get("/projects/:id", (req, res) => {
   const projectId = req.params.id;
   getImagesByProjectsId(projectId).then((data) => {
-    res.send(data[0].image)
+    return res.send(data[0].image)
+  }).catch((err) => {
+    return res.status(500).send(err)
   });
 });
 
