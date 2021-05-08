@@ -6,6 +6,12 @@ const getImagesByProjectsId = (projectId) => {
         .select('*');
 }
 
+const saveImage = (image) => {
+  return knex('images')
+  .insert(image)
+  .returning('id');
+}
+
 module.exports = {
-  getImagesByProjectsId
+  getImagesByProjectsId, saveImage
 }

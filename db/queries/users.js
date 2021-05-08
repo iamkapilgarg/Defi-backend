@@ -13,7 +13,6 @@ const getUserByAuthId = (authId) => {
 }
 
 const addUsers = (user) => {
-  console.log(user)
   return knex('users')
       .insert(user)
       .returning('id');
