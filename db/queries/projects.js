@@ -18,8 +18,15 @@ const getProjectsByUserId = (id) => {
   .select('*');
 }
 
+const saveProject = (project) => {
+  return knex('projects')
+      .insert(project)
+      .returning('id');
+}
+
 module.exports = {
   getProjectById,
   listProjects,
   getProjectsByUserId,
+  saveProject
 }
