@@ -75,7 +75,6 @@ router.get("/users/fundings/:id", (req, res) => {
       for (let image of images) {
         for (let project of projects) {
           if (image[0].project_id === project.id) {
-            console.log('inside a')
             projectsArray.push({ ...project, "images": image })
           }
         }

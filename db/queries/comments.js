@@ -2,8 +2,7 @@ const knex = require('../../knexfile');
 
 const getCommentsByProjectId = (id) => {
   return knex('comments')
-  .join('projects', 'comments.project_id', 'projects.id')
-  .where('projects.id', id)
+  .where('project_id', id)
   .select('*');
 };
 
