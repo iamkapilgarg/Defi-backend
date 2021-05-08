@@ -8,6 +8,12 @@ const getProjectsByInvestorId = (id) => {
   .select('*');
 };
 
+const saveFunding = (funding) => {
+  return knex('fundings')
+      .insert(funding)
+      .returning('id');
+}
+
 module.exports = {
-  getProjectsByInvestorId
+  getProjectsByInvestorId, saveFunding
 }
