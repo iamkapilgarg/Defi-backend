@@ -10,6 +10,7 @@ CREATE TABLE projects (
   round VARCHAR(50),
   contract TEXT,
   user_id INTEGER REFERENCES users(id) NOT NULL,
+  image VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP

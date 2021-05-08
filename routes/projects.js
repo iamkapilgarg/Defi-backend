@@ -3,30 +3,13 @@ const express = require('express');
 const router = express.Router();
 const { listProjects, getProjectById, getProjectsByUserId, saveProject } = require('../db/queries/projects');
 const { getProjectsByInvestorId } = require('../db/queries/fundings');
-const { saveImage, getImagesByProjectsId } = require('../db/queries/images')
 const aws = require('aws-sdk');
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 
 router.get("/", (req, res) => {
   listProjects().then((projects) => {
-    const promises = [];
-    for (let project of projects) {
-      promises.push(getImagesByProjectsId(project.id));
-    }
-    Promise.all(promises).then((images) => {
-      const projectsArray = [];
-      for (let image of images) {
-        for (let project of projects) {
-          if (image[0].project_id === project.id) {
-            projectsArray.push({ ...project, "images": image })
-          }
-        }
-      }
-      return res.status(200).json(projectsArray);
-    }).catch((err) => {
-      return res.status(500).send(err)
-    });
+    return res.status(200).json(projects);
   }).catch((err) => {
     return res.status(500).send(err)
   });
@@ -35,13 +18,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const projectId = req.params.id;
   getProjectById(projectId).then((data) => {
-    let project = {};
-    getImagesByProjectsId(data[0].id).then((images) => {
-      project = { ...data[0], images }
-      return res.status(200).json(project);
-    }).catch((err) => {
-      return res.status(500).send(err)
-    });
+    return res.status(200).json(data);
   }).catch((err) => {
     return res.status(500).send(err)
   });
@@ -50,23 +27,7 @@ router.get("/:id", (req, res) => {
 router.get("/users/:id", (req, res) => {
   const userId = req.params.id;
   getProjectsByUserId(userId).then((projects) => {
-    const promises = [];
-    for (let project of projects) {
-      promises.push(getImagesByProjectsId(project.id));
-    }
-    Promise.all(promises).then((images) => {
-      const projectsArray = [];
-      for (let image of images) {
-        for (let project of projects) {
-          if (image[0].project_id === project.id) {
-            projectsArray.push({ ...project, "images": image })
-          }
-        }
-      }
-      return res.status(200).json(projectsArray);
-    }).catch((err) => {
-      return res.status(500).send(err)
-    });
+    return res.status(200).json(projects);
   }).catch((err) => {
     return res.status(500).send(err)
   });
@@ -75,48 +36,13 @@ router.get("/users/:id", (req, res) => {
 router.get("/users/fundings/:id", (req, res) => {
   const userId = req.params.id;
   getProjectsByInvestorId(userId).then((projects) => {
-    console.log(projects)
-    const promises = [];
-    for (let project of projects) {
-      promises.push(getImagesByProjectsId(project.id));
-    }
-    Promise.all(promises).then((images) => {
-      const projectsArray = [];
-      for (let image of images) {
-        for (let project of projects) {
-          if (image[0].project_id === project.id) {
-            projectsArray.push({ ...project, "images": image })
-          }
-        }
-      }
-      return res.status(200).json(projectsArray);
-    }).catch((err) => {
-      return res.status(500).send(err)
-    });
+    return res.status(200).json(projects);
   }).catch((err) => {
     return res.status(500).send(err)
   });
 });
 
-aws.config.update({
-  secretAccessKey: process.env.SECRETACCESSKEY,
-  accessKeyId: process.env.ACCESSKEYID,
-  region: process.env.REGION
-});
-
-s3 = new aws.S3();
-
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: process.env.BUCKET_NAME,
-    key: (req, file, cb) => {
-      cb(null, file.originalname);
-    }
-  })
-});
-
-router.post('/', upload.array('image', 1), (req, res, next) => {
+router.post('/', (req, res) => {
   const body = req.body;
   if (body.name === undefined || body.name.trim() === '') {
     return res.status(400).json({ "message": "name cannot be blank" })
@@ -135,6 +61,9 @@ router.post('/', upload.array('image', 1), (req, res, next) => {
   }
   if (body.contract === undefined || body.contract.trim() === '') {
     return res.status(400).json({ "message": "contract cannot be blank" })
+  } 
+  if(body.image === undefined || body.image.trim === '') {
+    return res.status(400).json({ "message": "image cannot be blank" })
   }
   const project = {
     name: body.name,
@@ -146,19 +75,9 @@ router.post('/', upload.array('image', 1), (req, res, next) => {
     contract: body.contract,
     user_id: body.user_id,
     link: body.link,
+    image: body.image
   }
   saveProject(project).then((data) => {
-    if (req.files.length > 0) {
-      const image = {
-        project_id: data[0],
-        image: req.files[0].location
-      }
-      saveImage(image).then((data) => {
-        console.log("image saved successfully")
-      }).catch((err) => {
-        return res.status(500).send(err)
-      });
-    }
     return res.status(201).json({ "message": "project saved successfully", id: data[0] });
   }).catch((err) => {
     return res.status(500).send(err)

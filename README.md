@@ -46,26 +46,35 @@ axios(config)
 
 ```js
 var axios = require('axios');
-var FormData = require('form-data');
-var fs = require('fs');
-var data = new FormData();
-data.append('image', fs.createReadStream('/Users/kapilgarg/lighthouse/Defi-backend/db/images/Husky.jpeg'));
-data.append('name', '"Demo Project"');
-data.append('description', '"Description of the demo project"');
-data.append('target_amount', '10000');
-data.append('target_date', 'Jun 10, 2021');
-data.append('min_amount', '10');
-data.append('round', '1');
-data.append('contract', 'This is demo contract');
-data.append('user_id', '1');
-data.append('link', 'http://www.demo.com');
+var data = JSON.stringify({
+  "image": "https://unsplash.com/photos/kiNWOQgIOvU",
+  "name": "Demo",
+  "description": "Description of the demo project",
+  "target_amount": 10000,
+  "target_date": "Jun 10, 2021",
+  "min_amount": 10,
+  "round": 1,
+  "contract": "This is demo contract",
+  "user_id": 1,
+  "link": "http://www.demo.com'"
+});
 
 var config = {
   method: 'post',
-  url: 'localhost:8080/projects',
+  url: 'http://localhost:8080/projects',
   headers: { 
-    ...data.getHeaders()
+    'Content-Type': 'application/json'
   },
   data : data
 };
+
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
 ```
+
