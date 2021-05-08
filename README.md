@@ -5,7 +5,7 @@
 <tr><td>Get all projects</td><td>/projects</td></tr>
 <tr><td>Get project By id</td><td>/projects/:id</td></tr>
 <tr><td>Get projects By user id</td><td>/projects/users/:userId</td></tr>
-<tr><td>Get invested projects By user id</td><td>/projects/users/fundings/:userId</td></tr>
+<tr><td>Get funded projects By user id</td><td>/projects/users/fundings/:userId</td></tr>
 <tr><td>Get images By project id</td><td>/images/projects/:projectId</td></tr>
 <tr><td>Get fundings By project id</td><td>/fundings/projects/:project_id</td></tr>
 <tr><td>Get fundings By user id</td><td>/fundings/users/:user_id</td></tr>
