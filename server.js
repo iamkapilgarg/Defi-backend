@@ -8,12 +8,14 @@ const fundingRoutes = require('./routes/fundings');
 const commentRoutes = require('./routes/comments')
 const express = require("express");
 const morgan = require('morgan');
+const cors = require('cors');
 
 // Express Configuration
 App.use(BodyParser.urlencoded({ extended: false }));
 App.use(BodyParser.json());
 App.use(Express.static('public'));
 App.use(express.json());
+App.use(cors())
 App.use(morgan('dev'));
 App.use("/users", userRoutes);
 App.use("/projects", projectRoutes);
