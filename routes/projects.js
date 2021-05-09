@@ -84,25 +84,4 @@ router.post('/', (req, res) => {
   });
 });
 
-aws.config.update({
-  secretAccessKey: process.env.SECRETACCESSKEY,
-  accessKeyId: process.env.ACCESSKEYID,
-  region: process.env.REGION
-});
-
-s3 = new aws.S3();
-
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: process.env.BUCKET_NAME,
-    key: (req, file, cb) => {
-      cb(null, file.originalname);
-    }
-  })
-});
-
-router.post('/image', upload.array('image', 1), (req, res, next) => {
-  res.end(req.files[0].location);
-});
 module.exports = router;
