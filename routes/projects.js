@@ -3,9 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { listProjects, getProjectById, getProjectsByUserId, saveProject } = require('../db/queries/projects');
 const { getProjectsByInvestorId } = require('../db/queries/fundings');
-const aws = require('aws-sdk');
-const multer = require('multer')
-const multerS3 = require('multer-s3')
+const {upload} = require('./helper/helper')
+
 
 router.get("/", (req, res) => {
   listProjects().then((projects) => {
@@ -82,24 +81,6 @@ router.post('/', (req, res) => {
   }).catch((err) => {
     return res.status(500).send(err)
   });
-});
-
-aws.config.update({
-  secretAccessKey: process.env.SECRETACCESSKEY,
-  accessKeyId: process.env.ACCESSKEYID,
-  region: process.env.REGION
-});
-
-s3 = new aws.S3();
-
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: process.env.BUCKET_NAME,
-    key: (req, file, cb) => {
-      cb(null, file.originalname);
-    }
-  })
 });
 
 router.post('/image', upload.array('image', 1), (req, res, next) => {
