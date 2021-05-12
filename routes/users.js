@@ -26,9 +26,11 @@ router.post("/", (req, res) => {
   getUserByAuthId(auth_id).then((data) => {
     if(data.length === 0) {
       const name = req.body.name;
+      const email = req.body.email;
       const user = {
         name,
-        auth_id
+        auth_id,
+        email
       };
       addUsers(user).then((data) => {
         return res.status(201).json({message: "user saved successfully", id: data[0]})
@@ -37,7 +39,7 @@ router.post("/", (req, res) => {
       });
       return;
     }
-    return res.status(400).json({message: "user already exists"})
+    return res.status(200).json({message: "user already exists"})
   }).catch((err) => {
     return res.status(500).send(err)
   });

@@ -9,7 +9,7 @@ CREATE TABLE projects (
   link VARCHAR(255),
   round VARCHAR(50),
   contract TEXT,
-  user_id INTEGER REFERENCES users(id) NOT NULL,
+  auth_id VARCHAR(255) REFERENCES users(auth_id) NOT NULL,
   image VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP,
