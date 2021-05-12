@@ -13,7 +13,7 @@ const listProjects = () => {
 
 const getProjectsByUserId = (id) => {
   return knex('projects')
-  .where('user_id', id)
+  .where('auth_id', id)
   .select('*');
 }
 
