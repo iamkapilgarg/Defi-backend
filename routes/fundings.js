@@ -35,7 +35,7 @@ router.post("/", (req,res) => {
     return res.status(400).json({ "message": "transaction_id cannot be blank" })
   }
   const funding = {
-    "user_id": req.body.user_id,
+    "auth_id": req.body.user_id,
     "project_id": req.body.project_id,
     "amount": req.body.amount,
     "transaction_id": req.body.transaction_id

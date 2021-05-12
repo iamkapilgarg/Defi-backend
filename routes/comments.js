@@ -23,7 +23,7 @@ router.post("/", (req,res) => {
     return res.status(400).json({ "message": "comment cannot be blank" })
   }
   const comment = {
-    "user_id": req.body.user_id,
+    "auth_id": req.body.user_id,
     "project_id": req.body.project_id,
     "comment": req.body.comment
   }

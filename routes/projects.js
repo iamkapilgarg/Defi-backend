@@ -72,7 +72,7 @@ router.post('/', (req, res) => {
     min_amount: body.min_amount,
     round: body.round,
     contract: body.contract,
-    user_id: body.user_id,
+    auth_id: body.user_id,
     link: body.link,
     image: body.image
   }
