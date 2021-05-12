@@ -1,2 +1,2 @@
-INSERT INTO comments (user_id, project_id, comment) VALUES (3, 1, 'Awesome project');
-INSERT INTO comments (user_id, project_id, comment) VALUES (4, 2, 'I like the idea');
+INSERT INTO comments (auth_id, project_id, comment) VALUES (333333, 1, 'Awesome project');
+INSERT INTO comments (auth_id, project_id, comment) VALUES (444444, 2, 'I like the idea');
