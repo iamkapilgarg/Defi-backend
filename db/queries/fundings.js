@@ -18,7 +18,8 @@ const getProjectsByInvestorId = (id) => {
     'projects.created_at',
     'projects.updated_at',
     'projects.deleted_at',
-    'projects.image'
+    'projects.image',
+    'projects.wallet_id'
   );
 };
 
