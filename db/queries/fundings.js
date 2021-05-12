@@ -3,8 +3,8 @@ const knex = require('../../knexfile');
 const getProjectsByInvestorId = (id) => {
   return knex('fundings')
   .join('projects', 'fundings.project_id', 'projects.id')
-  .join('users', 'fundings.user_id', 'users.id')
-  .where('users.id', id)
+  .join('users', 'fundings.user_id', 'users.auth_id')
+  .where('auth_id.id', id)
   .select('projects.id as id',
     'projects.name',
     'projects.description',
@@ -31,7 +31,7 @@ const getFundingsByProjectID = (id) => {
 
 const getFundingsByUserID = (id) => {
   return knex('fundings')
-  .where('user_id', id)
+  .where('auth_id', id)
   .select('*')
 }
 

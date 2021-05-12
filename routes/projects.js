@@ -24,17 +24,18 @@ router.get("/:id", (req, res) => {
 });
 
 router.get("/users/:id", (req, res) => {
-  const userId = req.params.id;
-  getProjectsByUserId(userId).then((projects) => {
+  const authId = req.params.id;
+  getProjectsByUserId(authId).then((projects) => {
     return res.status(200).json(projects);
   }).catch((err) => {
+    console.log(err)
     return res.status(500).send(err)
   });
 });
 
 router.get("/users/fundings/:id", (req, res) => {
-  const userId = req.params.id;
-  getProjectsByInvestorId(userId).then((projects) => {
+  const authId = req.params.id;
+  getProjectsByInvestorId(authId).then((projects) => {
     return res.status(200).json(projects);
   }).catch((err) => {
     return res.status(500).send(err)
