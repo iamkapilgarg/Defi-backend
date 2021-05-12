@@ -74,7 +74,8 @@ router.post('/', (req, res) => {
     contract: body.contract,
     auth_id: body.user_id,
     link: body.link,
-    image: body.image
+    image: body.image,
+    wallet_id: body.wallet_id
   }
   saveProject(project).then((data) => {
     return res.status(201).json({ "message": "project saved successfully", id: data[0] });

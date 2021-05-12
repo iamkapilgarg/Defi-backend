@@ -1,4 +1,4 @@
-INSERT INTO projects (name, description, target_amount, target_date, min_amount, round, contract, auth_id, link, image)
-VALUES('Mixickers', 'Reusable Cocktail Recipe Stickers', 10000, 'May 30, 2021', 10, 3, 'I will refund the money if the deadline is not met', 111111, 'https://www.bbcgoodfood.com/recipes/collection/cocktail-recipes', 'https://defi-images.s3-us-west-2.amazonaws.com/cocktail.jpeg');
-INSERT INTO projects (name, description, target_amount, target_date, min_amount, round, contract, auth_id, link, image)
-VALUES('Stella', 'An inspiring story about a foster husky', 20000, 'Jun 30, 2021', 10, 3, 'Once you invest, forget about your money. But trust me.', 222222, 'https://dogtime.com/dog-breeds/siberian-husky#/slide/1', 'https://defi-images.s3-us-west-2.amazonaws.com/Husky.jpeg');
+INSERT INTO projects (name, description, target_amount, target_date, min_amount, round, contract, auth_id, link, image, wallet_id)
+VALUES('Mixickers', 'Reusable Cocktail Recipe Stickers', 10000, 'May 30, 2021', 10, 3, 'I will refund the money if the deadline is not met', 111111, 'https://www.bbcgoodfood.com/recipes/collection/cocktail-recipes', 'https://defi-images.s3-us-west-2.amazonaws.com/cocktail.jpeg', '0x22bbebaabc1eB778538b75f44bC3d3F8c22BFb4d');
+INSERT INTO projects (name, description, target_amount, target_date, min_amount, round, contract, auth_id, link, image, wallet_id)
+VALUES('Stella', 'An inspiring story about a foster husky', 20000, 'Jun 30, 2021', 10, 3, 'Once you invest, forget about your money. But trust me.', 222222, 'https://dogtime.com/dog-breeds/siberian-husky#/slide/1', 'https://defi-images.s3-us-west-2.amazonaws.com/Husky.jpeg', '0x40624B3D7ad7517505aEEaC4a0CcEDe46eC40E89');

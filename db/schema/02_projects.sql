@@ -11,6 +11,7 @@ CREATE TABLE projects (
   contract TEXT,
   auth_id VARCHAR(255) REFERENCES users(auth_id) NOT NULL,
   image VARCHAR(255),
+  wallet_id VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP,
   deleted_at TIMESTAMP
