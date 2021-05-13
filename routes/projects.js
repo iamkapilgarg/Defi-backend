@@ -2,13 +2,29 @@ require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const { listProjects, getProjectById, getProjectsByUserId, saveProject } = require('../db/queries/projects');
-const { getProjectsByInvestorId } = require('../db/queries/fundings');
+const { getProjectsByInvestorId, getFundingsByProjectID } = require('../db/queries/fundings');
 const {upload} = require('./helper/helper')
 
 
 router.get("/", (req, res) => {
   listProjects().then((projects) => {
-    return res.status(200).json(projects);
+    var promiseArray = []
+    projects.forEach((project) => {
+      promiseArray.push(new Promise((resolve, reject) => {
+        getFundingsByProjectID(project.id).then((fundings) => {
+          let total = 0;
+          for(let funding of fundings) {
+            total = total + Number(funding.amount);
+          }
+          console.log(total)
+          project["funding"] = total/project.target_amount*100;
+          resolve();
+        });
+      }));
+    });
+    Promise.all(promiseArray).then(() => {
+      return res.status(200).json(projects);
+    })
   }).catch((err) => {
     return res.status(500).send(err)
   });
@@ -17,7 +33,16 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const projectId = req.params.id;
   getProjectById(projectId).then((data) => {
-    return res.status(200).json(data);
+    let project = data[0];
+    getFundingsByProjectID(project.id).then((fundings) => {
+      let total = 0;
+      for(let funding of fundings) {
+        total = total + Number(funding.amount);
+      }
+      console.log(total)
+      project["funding"] = total/project.target_amount*100;
+      return res.status(200).json(project);
+    })
   }).catch((err) => {
     return res.status(500).send(err)
   });
