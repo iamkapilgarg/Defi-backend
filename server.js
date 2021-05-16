@@ -5,7 +5,8 @@ const PORT = process.env.PORT || 8080;
 const userRoutes = require('./routes/users');
 const projectRoutes = require('./routes/projects');
 const fundingRoutes = require('./routes/fundings');
-const commentRoutes = require('./routes/comments')
+const commentRoutes = require('./routes/comments');
+const likesRoutes = require('./routes/likes');
 const express = require("express");
 const morgan = require('morgan');
 const cors = require('cors');
@@ -21,6 +22,7 @@ App.use("/users", userRoutes);
 App.use("/projects", projectRoutes);
 App.use("/fundings", fundingRoutes);
 App.use("/comments", commentRoutes);
+App.use("/likes", likesRoutes);
 App.set("view engine", "ejs");
 
 // Sample GET route
