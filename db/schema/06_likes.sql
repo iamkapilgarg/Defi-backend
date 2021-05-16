@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS likes CASCADE;
+CREATE TABLE likes (
+  id SERIAL PRIMARY KEY NOT NULL,
+  auth_id VARCHAR(255) REFERENCES users(auth_id) NOT NULL,
+  project_id INTEGER REFERENCES projects(id) NOT NULL
+);
