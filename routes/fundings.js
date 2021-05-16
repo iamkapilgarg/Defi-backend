@@ -3,6 +3,16 @@ const express = require('express');
 const router = express.Router();
 const {getFundingsByProjectID, saveFunding, getFundingsByUserID} = require('../db/queries/fundings');
 
+const Pusher = require("pusher");
+
+const pusher = new Pusher({
+  appId: process.env.appId,
+  key: process.env.key,
+  secret: process.env.secret,
+  cluster: process.env.cluster,
+  useTLS: true
+});
+
 router.get("/projects/:id", (req, res) => {
   const projectId = req.params.id;
   getFundingsByProjectID(projectId).then((data) => {
@@ -41,6 +51,9 @@ router.post("/", (req,res) => {
     "transaction_id": req.body.transaction_id
   }
   saveFunding(funding).then((data)=>{
+    pusher.trigger("my-channel", "my-event", {
+      message: "hello world"
+    });
     return res.status(201).json({"message": "transaction saved successfully", "id":data[0]})
   }).catch((err) => {
     return res.status(500).send(err)
