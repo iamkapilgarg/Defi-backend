@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const {getLikesByUserID, saveLikes} = require('../db/queries/likes');
+const {getLikesByUserID, saveLikes, deleteLikes} = require('../db/queries/likes');
 
 router.get("/:id", (req, res) => {
   const userId = req.params.id;
@@ -19,6 +19,18 @@ router.post("/", (req,res) => {
   }
   saveLikes(like).then((data)=>{
     return res.status(201).json({"message": "likes saved successfully", "id": data[0]})
+  }).catch((err) => {
+    return res.status(500).send(err)
+  });
+});
+
+router.post("/delete", (req,res) => {
+  const like = {
+    "auth_id": req.body.auth_id,
+    "project_id": req.body.project_id,
+  }
+  deleteLikes(like).then((data)=>{
+    return res.status(201).json({"message": "likes deleted successfully", "id": data[0]})
   }).catch((err) => {
     return res.status(500).send(err)
   });
