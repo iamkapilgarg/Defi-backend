@@ -18,6 +18,7 @@ router.get("/", (req, res) => {
           }
           console.log(total)
           project["funding"] = total/project.target_amount*100;
+          project["investors"] = fundings.length;
           resolve();
         });
       }));
@@ -41,6 +42,7 @@ router.get("/:id", (req, res) => {
       }
       console.log(total)
       project["funding"] = total/project.target_amount*100;
+      project["investors"] = fundings.length;
       return res.status(200).json(project);
     })
   }).catch((err) => {
@@ -101,11 +103,13 @@ router.post('/', (req, res) => {
     auth_id: body.user_id,
     link: body.link,
     image: body.image,
-    wallet_id: body.wallet_id
+    wallet_id: body.wallet_id,
+    video: body.video
   }
   saveProject(project).then((data) => {
     return res.status(201).json({ "message": "project saved successfully", id: data[0] });
   }).catch((err) => {
+    console.log(err)
     return res.status(500).send(err)
   });
 });
